@@ -23,6 +23,11 @@ JS, React, API's Axion
 Group Project:
 05/15 Team Members:
 
+## Collaboration
+
+5/15 Dan Quin Web Response Chart 
+
+
 
 ### Time Estimates
 
