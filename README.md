@@ -31,16 +31,16 @@ Group Project:
 
 ### Time Estimates
 
-Name of feature: ________________________________
+Name of feature: Body 
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3 hours
 
-Start time: _____
+Start time: 1pm
 
-Finish time: _____
+Finish time: 8pm
 
-Actual time needed to complete: _____
-Name of feature: ________________________________
+Actual time needed to complete: 5 hours
+Name of feature:Trello 5-7
 
 Estimate of time needed to complete: _____
 
