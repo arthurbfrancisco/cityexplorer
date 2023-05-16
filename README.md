@@ -27,6 +27,8 @@ Actual time needed to complete: _____
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Dan Quin 5/15
+[Collab:Sketch](sketch1.png)
 Name of feature: ________________________________
 
 Estimate of time needed to complete: _____
