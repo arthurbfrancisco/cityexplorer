@@ -1,36 +1,78 @@
 import React from 'react';
 import axios from 'axios';
+import { Card } from 'react-bootstrap';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      searchQuery:'',
-      location: {}
+    this.state = {
+      cityName: '',
+      cityData: {},
+      haveCityData: false,
+      error: false,
+      errorMessage: ''
     }
   }
 
-  getLocation = async (e) => {
-    const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
-    const res = await axios.get(API);
-    console.log(res.data[0])
-    this.setState({ location:res.data[0] });
+  // WHEN DEALING WITH AXIOS YOU NEED 3 things:
+  // - 1) async
+  // - 2) await
+  // - 3) .data
+  handleCitySubmit = async (event) => {
+    event.preventDefault();
+    try {
+      let cityUrl = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
+      let city = await axios.get(cityUrl);
+      console.log(city);
+      this.setState({
+        Data1: city.data[0],
+        error: false,
+        haveCityData: true
+      });
+    }
+    catch (error) {
+      console.log('error: ', error);
+      console.log('error.message: ', error.message);
+      this.setState({
+        error: true,
+        errorMessage: `An error Occured: ${error.response.status}`
+      });
+    }
+  }
+
+
+  changeCityInput = (e) => {
+    this.setState({
+      cityName: e.target.value
+    });
   }
 
   render() {
-    return(
+    console.log(this.state)
+    return (
       <>
-      <form onSubmit={this.getLocation}>
-        <input onChange={(e) => this.setState({ searchQuery: e.target.value })} placeholder="search for a city"></input>
-        <button onClick={this.getLocation}>Explore!</button>
+        <h1>Data from an API</h1>
+        <form onSubmit={this.handleCitySubmit}>
+          <label>
+            <input name="city" onChange={this.changeCityInput} />
+          </label>
+          <button type="submit">Explore!</button>
         </form>
-        {this.state.location.place_id && 
-        <>
-          <h2>The city is: {this.state.location.display_name}</h2>
-          </>
+        {this.state.error ? <p>{this.state.errorMessage}</p> :
+          this.state.haveCityData &&
+          <Card className='City p-2 h-100%' style={{ width: '75%' }}>
+            <Card.Body>
+              <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.Data1.lat},${this.state.Data1.lon}&zoom=12`} alt="" />
+              <Card.Title>{this.state.cityName}</Card.Title>
+              <Card.Text>Lat: {this.state.Data1.lat}</Card.Text>
+              <Card.Text>Lon: {this.state.Data1.lon}</Card.Text>
+            </Card.Body>
+          </Card>
         }
       </>
-    )
+    );
   }
 }
 
