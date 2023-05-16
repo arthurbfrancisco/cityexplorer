@@ -42,7 +42,7 @@ class App extends React.Component {
       // console.log(city);
       // Once the response is received, update the component's state with the received data and set the error flag to false.
       this.setState({
-        Data1: city.data[0],
+        Data1: city.data[0], //Very first data 
         error: false,
         haveCityData: true
       });
@@ -101,7 +101,7 @@ class App extends React.Component {
             <Card className='City p-2 h-100%' style={{ width: '75%' }}>
               <Card.Body>
                 <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.Data1.lat},${this.state.Data1.lon}&zoom=12`} alt="" />
-                <Card.Title>{this.state.cityName}</Card.Title>
+                <Card.Title>{this.state.Data1.display_name}</Card.Title>
                 <Card.Text>Lat: {this.state.Data1.lat}</Card.Text>
                 <Card.Text>Lon: {this.state.Data1.lon}</Card.Text>
               </Card.Body>
