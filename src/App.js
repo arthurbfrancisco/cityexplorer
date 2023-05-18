@@ -1,16 +1,27 @@
+// Import React library which lets us create React components.
 import React from 'react';
+// Import Axios library which is used for making HTTP requests from our application.
 import axios from 'axios';
+// Import Card component from React Bootstrap library. This will be used for styling purposes.
 import { Card } from 'react-bootstrap';
+// Import the CSS file for the application.
 import './App.css';
+// Import bootstrap CSS file which provides base styling for bootstrap components.
 import 'bootstrap/dist/css/bootstrap.min.css'
+// Import Button component from React Bootstrap library for UI purposes.
 import Button from 'react-bootstrap/Button'
+// Import Weather component which presumably displays weather data.
 import Weather from './Weather.js'
+// Import Movie component which presumably displays movie data.
 import Movie from './Movie.js'
 
+// Define the App class component which extends React's Component class.
 class App extends React.Component {
-  constructor(props) {
+    // Define the constructor of the App class which accepts props and calls super(props) to call the constructor of the parent class.
+constructor(props) {
     super(props);
-    this.state = {
+        // Initial state of the App component is defined in this.state.
+      this.state = {
       cityName: '',
       cityData: {},
       haveCityData: false,
@@ -27,22 +38,29 @@ class App extends React.Component {
   // - 1) async
   // - 2) await
   // - 3) .data
-  handleCitySubmit = async (event) => {
-    event.preventDefault();
+    // handleCitySubmit is an async function that is used when a city is submitted.
+handleCitySubmit = async (event) => {
+        // preventDefault is called to prevent the page from reloading when the form is submitted.
+event.preventDefault();
     try {
+      // Define the URL that will be used to get city data.
       let cityUrl = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
+      // Make a GET request to the URL and await for the response.
       let city = await axios.get(cityUrl);
-      this.setState({
+      // Set the state with the response data.
+        this.setState({
         Data1: city.data[0],
         error: false,
         haveCityData: true,
         lat: city.data[0].lat,
         lon: city.data[0].lon
       });
+      // Call getWeather and getMovie functions with updated state.
       this.getWeather(city.data[0].lat, city.data[0].lon);
       this.getMovie();
     }
     catch (error) {
+      // If there's an error, log it and update the state.
       console.log('error: ', error);
       console.log('error.message: ', error.message);
       this.setState({
@@ -52,21 +70,26 @@ class App extends React.Component {
     }
   }
 
-  getWeather = async (lat, lon) => {
+    // getWeather is an async function that fetches weather data for given lat and lon.
+    getWeather = async (lat, lon) => {
     try {
       // let { lat, lon } = this.state.Data1;
+      // Define the URL that will be used to get weather data.
       let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?cityData=${this.state.cityName}&lat=${lat}&lon=${lon}`;
+      // Make a GET request to the URL and await for the response.
       let weatherResponse = await axios.get(weatherUrl);
       // console.log(weatherResponse.data)
       let weatherData = weatherResponse.data;
       // let date = new Date(weatherData.dt * 1000).toLocaleDateString();
       // let description = weatherData[0].description;
-      this.setState({
+      // Set the state with the response data.
+        this.setState({
         weatherData
       })
       // console.log('Date:', date);
       // console.log('Description:', description);
     } catch (error) {
+      // If there's an error, log it.
       console.log('Error getting weather: ', error);
     }
   };
