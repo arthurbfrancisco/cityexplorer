@@ -24,7 +24,6 @@ class App extends React.Component {
       errorMessage: '' // 
     }
   }
-
   // WHEN DEALING WITH AXIOS YOU NEED 3 things:
   // - 1) async
   // - 2) await
@@ -36,7 +35,7 @@ class App extends React.Component {
     event.preventDefault();
     try {
       // Construct the URL for the API call. It includes the city name from the component's state.
-      let cityUrl = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
+      let cityUrl = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_API_KEY}&q=${this.state.cityName}&format=json`;
       // Make the API call using axios and wait for the response. This is why the function needs to be async.
       let city = await axios.get(cityUrl);
       // console.log(city);
@@ -100,7 +99,7 @@ class App extends React.Component {
             
             <Card className='City p-2 h-100%' style={{ width: '75%' }}>
               <Card.Body>
-                <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.Data1.lat},${this.state.Data1.lon}&zoom=12`} alt="" />
+                <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY}&center=${this.state.Data1.lat},${this.state.Data1.lon}&zoom=12`} alt="" />
                 <Card.Title>{this.state.Data1.display_name}</Card.Title>
                 <Card.Text>Lat: {this.state.Data1.lat}</Card.Text>
                 <Card.Text>Lon: {this.state.Data1.lon}</Card.Text>
@@ -118,3 +117,4 @@ export default App;
 //{/* The Card.Img is a component from the react-bootstrap library. It's used here to display a map centered on the city.
 //{/* The Card.Title is a component from the react-bootstrap library. It's used here to display the city name from the state. */}
 //{/* The Card.Text is a component from the react-bootstrap library. It's used here twice to display the latitude and longitude from the city data in the state. */}
+
